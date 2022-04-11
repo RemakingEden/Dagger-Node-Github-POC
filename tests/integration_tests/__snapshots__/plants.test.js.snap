@@ -1,0 +1,48 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Tests with complete DB Tests with GET Get list of plants 1`] = `
+Array [
+  Object {
+    "colour": "Green",
+    "createdAt": Any<String>,
+    "id": 1,
+    "season": true,
+    "size": "XL",
+    "species": "Monstera",
+    "updatedAt": Any<String>,
+  },
+  Object {
+    "colour": "Green & White",
+    "createdAt": Any<String>,
+    "id": 2,
+    "season": false,
+    "size": "M",
+    "species": "Peace Lilly",
+    "updatedAt": Any<String>,
+  },
+]
+`;
+
+exports[`Tests with complete DB Tests with POST Add a new plant 1`] = `
+Object {
+  "colour": "Green",
+  "createdAt": Any<String>,
+  "id": 3,
+  "season": false,
+  "size": "S",
+  "species": "Boston Fern",
+  "updatedAt": Any<String>,
+}
+`;
+
+exports[`Tests with complete DB Tests with PUT Edit a plant 1`] = `
+Object {
+  "colour": "Purple",
+  "createdAt": Any<String>,
+  "id": 1,
+  "season": true,
+  "size": "XL",
+  "species": "Cactus",
+  "updatedAt": Any<String>,
+}
+`;

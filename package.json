@@ -1,0 +1,53 @@
+{
+  "name": "node-sequelize",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "nodemon ./bin/www",
+    "db:create": "npx sequelize-cli db:create",
+    "migrate": "npx sequelize-cli db:migrate",
+    "migrate:reset": "npx sequelize-cli db:migrate:undo:all && npm run migrate",
+    "seed": "npx sequelize-cli db:seed:all",
+    "seed:reset": "npx sequelize-cli db:seed:undo && npm run seed",
+    "db:drop": "npx sequelize-cli db:drop",
+    "start:test": "cross-env NODE_ENV=test nodemon ./bin/www",
+    "db:create:test": "cross-env NODE_ENV=test npx sequelize-cli db:create",
+    "migrate:test": "cross-env NODE_ENV=test npx sequelize-cli db:migrate",
+    "migrate:reset:test": "npx sequelize-cli db:migrate:undo:all && npm run migrate",
+    "seed:test": "cross-env NODE_ENV=test npx sequelize-cli db:seed:all",
+    "seed:reset:test": "cross-env NODE_ENV=test npx sequelize-cli db:seed:undo && npm run seed",
+    "db:drop:test": "cross-env NODE_ENV=test npx sequelize-cli db:drop",
+    "pretest": "cross-env NODE_ENV=test npm run db:drop:test && npm run db:create:test && npm run migrate:test && npm run seed:test",
+    "test": "cross-env NODE_ENV=test jest --testTimeout=10000",
+    "posttest": "cross-env NODE_ENV=test npm run db:drop:test",
+    "db:create:ci": "cross-env NODE_ENV=ci npx sequelize-cli db:create",
+    "migrate:ci": "cross-env NODE_ENV=ci npx sequelize-cli db:migrate",
+    "seed:ci": "cross-env NODE_ENV=ci npx sequelize-cli db:seed:all",
+    "test:ci": "npm run db:create:ci && npm run migrate:ci && npm run seed:ci && cross-env NODE_ENV=ci jest --testTimeout=10000"
+  },
+  "dependencies": {
+    "cookie-parser": "~1.4.4",
+    "cross-env": "^7.0.3",
+    "debug": "~4.3.4",
+    "ejs": "~3.1.6",
+    "express": "~4.17.3",
+    "http-errors": "~2.0.0",
+    "jest": "^27.5.1",
+    "jest-snapshot": "^27.5.1",
+    "morgan": "~1.10.0",
+    "pg": "^8.7.3",
+    "pg-hstore": "^2.3.4",
+    "sequelize": "^6.18.0",
+    "sequelize-cli": "^6.4.1",
+    "supertest": "^6.2.2",
+    "ts-node": "^10.7.0"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.18.0",
+    "@typescript-eslint/parser": "^5.18.0",
+    "audit-ci": "^6.1.2",
+    "eslint": "^8.13.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.26.0"
+  }
+}

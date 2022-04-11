@@ -1,0 +1,30 @@
+{
+  "development": {
+    "username": "postgres",
+    "password": "postgres",
+    "database": "remakingeden",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  },
+  "test": {
+    "username": "postgres",
+    "password": "postgres",
+    "database": "remakingeden_test",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  },
+  "ci": {
+    "username": "postgres",
+    "password": "postgres",
+    "database": "remakingeden_ci",
+    "host": "localhost",
+    "dialect": "postgres"
+  },
+  "production": {
+    "username": "postgres",
+    "password": "postgres",
+    "database": "remakingeden_production",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  }
+}
