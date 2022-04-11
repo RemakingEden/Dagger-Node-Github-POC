@@ -13,7 +13,7 @@ dagger.#Plan & {
 				contents: dagger.#FS
 				exclude: [
 					"README.md",
-					"eden.cue"
+					"eden.cue",
 				]
 			}
 		}
@@ -95,28 +95,29 @@ dagger.#Plan & {
 					input: build.output
 					command: {
 						name: "/bin/bash"
-						args: ["-c", "npm run test"]
+						args: ["-c", "npm run test:ci"]
 					}
 				}
 			}
-			SCA: {		
-				secretDetection: {
-					docker.#Run & {
-						workdir: "./src"
-						input: deps.gitleaks.output
-						command: {
-							name: "detect"
-						}
+		}
+
+		SCA: {
+			secretDetection: {
+				docker.#Run & {
+					workdir: "./src"
+					input:   deps.gitleaks.output
+					command: {
+						name: "detect"
 					}
 				}
-				dependencyScanning: {
-					docker.#Run & {
-						workdir: "./src"
-						input: build.output
-						command: {
-							name: "/bin/bash"
-							args: ["-c", "npx audit-ci --high"]
-						}
+			}
+			dependencyScanning: {
+				docker.#Run & {
+					workdir: "./src"
+					input:   build.output
+					command: {
+						name: "/bin/bash"
+						args: ["-c", "npx audit-ci --high"]
 					}
 				}
 			}
