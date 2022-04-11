@@ -1,7 +1,14 @@
-# Eden in Express/Postgres/Jest/Supertest
+# Dagger/Node Github Example
 
 [![Open in Visual Studio Code](https://img.shields.io/static/v1?logo=visualstudiocode&label=&message=Open%20in%20Visual%20Studio%20Code&labelColor=2c2c32&color=007acc&logoColor=007acc)](https://open.vscode.dev/jpb06/jest-badges-action)
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=RemakingEden_Eden-in-Express-Postgres-Sequelize-Jest-Supertest&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=RemakingEden_Eden-in-Express-Postgres-Sequelize-Jest-Supertest)
+
+This is a clone of a REST API I created to understand Express/Postgres/Jest/Supertest a little more, the original repo is [here](https://github.com/RemakingEden/Eden-in-Express-Postgres-Sequelize-Jest-Supertest). 
+
+In this repo I have implemented the really interesting CI/CD framework from the guys at [Dagger.io](https://dagger.io/). This framework allows the CI/CD pipeline to be platform agnostic, adds some great structure to the config using [CUE](https://cuelang.org/) a new config language. But most importantly for me, it allows me to easily run the whole pipeline locally, quickly and easily. Check out the pipeline for this project in the eden.cue file. I highly recommend you check out the project and contribute if you can! 
+
+Below is the content from the origin README detailing how to use the REST API.
+
+---
 
 Eden is a mock plant shop. It is an example of a very basic REST API with integration tests. My hope is to make a test framework that can be scaled.
 
