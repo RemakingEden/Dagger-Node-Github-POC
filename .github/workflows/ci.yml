@@ -4,73 +4,52 @@ name: CI
 on:
   # Triggers the workflow on push or pull request events but only for the main branch
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
-    branches: [ main ]
+    branches: [main]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   build:
-    # The type of runner that the job will run on
     runs-on: ubuntu-latest
-
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v3
+      - name: Clone repository
+        uses: actions/checkout@v2
 
-      - name: Install npm packages
-        run: npm ci
+      - name: Dagger Build Application
+        uses: dagger/dagger-for-github@v2
+        # See all options at https://github.com/dagger/dagger-for-github
+        with:
+          workdir: ./
+          args: do build
 
   static-analysis:
     runs-on: ubuntu-latest
-
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v3
+      - name: Clone repository
+        uses: actions/checkout@v2
 
-      - uses: actions/cache@v3
+      - name: Dagger Static Analysis
+        uses: dagger/dagger-for-github@v2
+        # See all options at https://github.com/dagger/dagger-for-github
         with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
-
-      - name: Install npm packages
-        run: npm ci
-
-      - name: lint
-        run: npx eslint --color .
+          workdir: ./
+          args: do staticAnalysis
 
   sca:
     runs-on: ubuntu-latest
-
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v3
+      - name: Clone repository
+        uses: actions/checkout@v2
+
+      - name: Dagger SCA scan Application
+        uses: dagger/dagger-for-github@v2
+        # See all options at https://github.com/dagger/dagger-for-github
         with:
-          fetch-depth: '0'
-
-      - uses: actions/cache@v3
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
-
-      - name: Install npm packages
-        run: npm ci
-
-      - name: Secret detection
-        uses: zricethezav/gitleaks-action@master
-
-      - name: Dependency scanning
-        run: npx audit-ci --high
+          workdir: ./
+          args: do SCA
 
   test:
     # The type of runner that the job will run on
@@ -97,24 +76,13 @@ jobs:
           # Maps tcp port 5432 on service container to the host
           - 5432:5432
 
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v3
+      - name: Clone repository
+        uses: actions/checkout@v2
 
-      - uses: actions/cache@v3
+      - name: Dagger Test Application
+        uses: dagger/dagger-for-github@v2
+        # See all options at https://github.com/dagger/dagger-for-github
         with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
-
-      - name: Install npm packages
-        run: npm ci
-
-      - name: Start integration tests
-        run: npm run test:ci
-
-      - name: Start unit tests
-        run: echo "No unit tests available currently"
-
+          workdir: ./
+          args: do test
