@@ -44,7 +44,7 @@ jobs:
       - name: Clone repository
         uses: actions/checkout@v2
 
-      - name: Build Application
+      - name: Dagger SCA scan Application
         uses: dagger/dagger-for-github@v2
         # See all options at https://github.com/dagger/dagger-for-github
         with:
@@ -80,7 +80,7 @@ jobs:
       - name: Clone repository
         uses: actions/checkout@v2
 
-      - name: Build Application
+      - name: Dagger Test Application
         uses: dagger/dagger-for-github@v2
         # See all options at https://github.com/dagger/dagger-for-github
         with:
