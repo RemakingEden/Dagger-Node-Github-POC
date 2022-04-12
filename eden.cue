@@ -17,15 +17,11 @@ dagger.#Plan & {
 				]
 			}
 		}
-		env: {
-			APP_NAME:      string
-			NETLIFY_TEAM:  string
-			NETLIFY_TOKEN: dagger.#Secret
-		}
+		env: {}
 	}
 	actions: {
 		deps: {
-			build:
+			node:
 				docker.#Build & {
 					steps: [
 						docker.#Pull & {
@@ -62,7 +58,7 @@ dagger.#Plan & {
 		build: {
 			bash.#Run & {
 				workdir: "./src"
-				input:   deps.build.output
+				input:   deps.node.output
 				script: contents: #"""
 					npm ci
 					"""#
