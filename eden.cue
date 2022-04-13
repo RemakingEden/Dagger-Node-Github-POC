@@ -90,6 +90,10 @@ dagger.#Plan & {
 					}
 					workdir: "/usr/src"
 					input:   deps.sonarscanner.output
+					command: {
+						name: "/bin/bash"
+						args: ["-c", "sonar-scanner -D sonar.branch.name=${GITHUB_REF}"]
+					}
 				}
 		}
 
