@@ -81,9 +81,9 @@ dagger.#Plan & {
 			sonarscanner:
 				docker.#Run & {
 					env: {
-					SONAR_HOST_URL: "https://sonarcloud.io"
-					SONAR_LOGIN: ${{ secrets.SONAR_LOGIN }}
-				}
+						SONAR_HOST_URL: "https://sonarcloud.io"
+						SONAR_LOGIN:    dagger.#Secret
+					}
 					workdir: "/usr/src"
 					input:   deps.sonarscanner.output
 				}
@@ -101,15 +101,15 @@ dagger.#Plan & {
 				}
 			}
 			// unitTest: {
-			// 	workdir: "./src"
-			// 	docker.#Run & {
-			// 		input: build.output
-			// 		command: {
-			// 			name: "/bin/bash"
-			// 			args: ["-c", "npm run test:unit"]
-			// 		}
-			// 	}
-			// 	output: code coverage file
+			//  workdir: "./src"
+			//  docker.#Run & {
+			//   input: build.output
+			//   command: {
+			//    name: "/bin/bash"
+			//    args: ["-c", "npm run test:unit"]
+			//   }
+			//  }
+			//  output: code coverage file
 			// }
 		}
 

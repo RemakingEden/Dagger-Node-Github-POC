@@ -27,6 +27,8 @@ jobs:
 
   static-analysis:
     runs-on: ubuntu-latest
+    env:
+      SONAR_LOGIN: ${{ secrets.SONAR_LOGIN }}
     steps:
       - name: Clone repository
         uses: actions/checkout@v2
