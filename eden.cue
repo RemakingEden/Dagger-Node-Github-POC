@@ -17,7 +17,9 @@ dagger.#Plan & {
 				]
 			}
 		}
-		env: {}
+		env: {
+			SONAR_LOGIN: dagger.#Secret
+		}
 	}
 	actions: {
 		deps: {
@@ -81,8 +83,8 @@ dagger.#Plan & {
 			sonarscanner:
 				docker.#Run & {
 					env: {
+						SONAR_LOGIN:    client.env.SONAR_LOGIN
 						SONAR_HOST_URL: "https://sonarcloud.io"
-						SONAR_LOGIN:    dagger.#Secret
 					}
 					workdir: "/usr/src"
 					input:   deps.sonarscanner.output
