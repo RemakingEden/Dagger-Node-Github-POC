@@ -45,11 +45,15 @@ dagger.#Plan & {
 						},
 					]
 				}
-			postgres:
+			sonarscanner:
 				docker.#Build & {
 					steps: [
 						docker.#Pull & {
-							source: "index.docker.io/postgres"
+							source: "index.docker.io/sonarsource/sonar-scanner-cli"
+						},
+						docker.#Copy & {
+							contents: client.filesystem."./".read.contents
+							dest:     "/usr/src"
 						},
 					]
 				}
@@ -75,12 +79,13 @@ dagger.#Plan & {
 						"""#
 				}
 			sonarscanner:
-				bash.#Run & {
-					workdir: "./src"
-					input:   build.output
-					script: contents: #"""
-						echo 'This needs setting up'
-						"""#
+				docker.#Run & {
+					env: {
+					SONAR_HOST_URL: "https://sonarcloud.io"
+					SONAR_LOGIN: ${{ secrets.SONAR_LOGIN }}
+				}
+					workdir: "/usr/src"
+					input:   deps.sonarscanner.output
 				}
 		}
 
@@ -95,6 +100,17 @@ dagger.#Plan & {
 					}
 				}
 			}
+			// unitTest: {
+			// 	workdir: "./src"
+			// 	docker.#Run & {
+			// 		input: build.output
+			// 		command: {
+			// 			name: "/bin/bash"
+			// 			args: ["-c", "npm run test:unit"]
+			// 		}
+			// 	}
+			// 	output: code coverage file
+			// }
 		}
 
 		SCA: {
