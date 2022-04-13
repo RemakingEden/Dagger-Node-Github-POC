@@ -29,7 +29,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       SONAR_LOGIN: ${{ secrets.SONAR_LOGIN }}
-      GITHUB_REF: ${{ GITHUB_REF }}
+      GITHUB_REF: ${GITHUB_REF}
     steps:
       - name: Clone repository
         uses: actions/checkout@v2
