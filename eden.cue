@@ -90,6 +90,10 @@ dagger.#Plan & {
 					}
 					workdir: "/usr/src"
 					input:   deps.sonarscanner.output
+					command: {
+						name: "s/usr/bin/entrypoint.sh sonar-scanner"
+						args: ["-D", "sonar.branch.name=$GITHUB_BRANCH_NAME"]
+					}
 				}
 		}
 
