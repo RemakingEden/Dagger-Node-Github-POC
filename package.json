@@ -39,7 +39,7 @@
     "pg-hstore": "^2.3.4",
     "sequelize": "^6.19.0",
     "sequelize-cli": "^6.4.1",
-    "supertest": "^6.2.2",
+    "supertest": "^6.2.3",
     "ts-node": "^10.7.0"
   },
   "devDependencies": {
