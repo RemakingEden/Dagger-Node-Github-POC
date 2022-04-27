@@ -84,13 +84,13 @@ dagger.#Plan & {
 			sonarscanner:
 				docker.#Run & {
 					env: {
-						GITHUB_BRANCH_NAME:     client.env.GITHUB_REF
-						SONAR_LOGIN:    client.env.SONAR_LOGIN
-						SONAR_HOST_URL: "https://sonarcloud.io"
+						GITHUB_BRANCH_NAME: client.env.GITHUB_REF
+						SONAR_LOGIN:        client.env.SONAR_LOGIN
+						SONAR_HOST_URL:     "https://sonarcloud.io"
 					}
 					workdir: "/usr/src"
 					input:   deps.sonarscanner.output
-				}	
+				}
 		}
 
 		test: {
@@ -119,13 +119,23 @@ dagger.#Plan & {
 
 		SCA: {
 			secretDetection: {
-				docker.#Run & {
-					workdir: "./src"
-					input:   deps.gitleaks.output
-					command: {
-						name: "detect"
-					}
-				}
+				steps: [
+					docker.#Run & {
+						workdir: "./src"
+						input:   deps.gitleaks.output
+						command: {
+							name: "/bin/bash"
+							args: ["git config --global --add safe.directory ./src"]
+						}
+					},
+					docker.#Run & {
+						workdir: "./src"
+						input:   deps.gitleaks.output
+						command: {
+							name: "detect"
+						}
+					},
+				]
 			}
 			dependencyScanning: {
 				docker.#Run & {
