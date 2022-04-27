@@ -15,6 +15,13 @@ common_setup() {
     DAGGER_LOG_FORMAT="plain"
     export DAGGER_LOG_FORMAT
 
+    export DAGGER_LOG_LEVEL="debug"
+    if [ -n "$GITHUB_ACTIONS" ];
+    then
+        export DAGGER_CACHE_TO="$DAGGER_CACHE_TO-$BATS_TEST_NAME"
+        export DAGGER_CACHE_FROM="$DAGGER_CACHE_FROM-$BATS_TEST_NAME"
+    fi
+
     # cd into the directory containing the bats file
     cd "$BATS_TEST_DIRNAME" || exit 1
 }

@@ -17,7 +17,10 @@ dagger.#Plan & {
 				]
 			}
 		}
-		env: {}
+		env: {
+			SONAR_LOGIN: dagger.#Secret
+			GITHUB_REF:  GITHUB_REF
+		}
 	}
 	actions: {
 		deps: {
@@ -45,11 +48,15 @@ dagger.#Plan & {
 						},
 					]
 				}
-			postgres:
+			sonarscanner:
 				docker.#Build & {
 					steps: [
 						docker.#Pull & {
-							source: "index.docker.io/postgres"
+							source: "index.docker.io/sonarsource/sonar-scanner-cli"
+						},
+						docker.#Copy & {
+							contents: client.filesystem."./".read.contents
+							dest:     "/usr/src"
 						},
 					]
 				}
@@ -75,12 +82,14 @@ dagger.#Plan & {
 						"""#
 				}
 			sonarscanner:
-				bash.#Run & {
-					workdir: "./src"
-					input:   build.output
-					script: contents: #"""
-						echo 'This needs setting up'
-						"""#
+				docker.#Run & {
+					env: {
+						GITHUB_BRANCH_NAME: client.env.GITHUB_REF
+						SONAR_LOGIN:        client.env.SONAR_LOGIN
+						SONAR_HOST_URL:     "https://sonarcloud.io"
+					}
+					workdir: "/usr/src"
+					input:   deps.sonarscanner.output
 				}
 		}
 
@@ -95,18 +104,30 @@ dagger.#Plan & {
 					}
 				}
 			}
+			// unitTest: {
+			//  workdir: "./src"
+			//  docker.#Run & {
+			//   input: build.output
+			//   command: {
+			//    name: "/bin/bash"
+			//    args: ["-c", "npm run test:unit"]
+			//   }
+			//  }
+			//  output: code coverage file
+			// }
 		}
 
 		SCA: {
-			secretDetection: {
-				docker.#Run & {
-					workdir: "./src"
-					input:   deps.gitleaks.output
-					command: {
-						name: "detect"
-					}
-				}
-			}
+			// Currently failing due to https://github.blog/2022-04-12-git-security-vulnerability-announced/ , the gitleaks container needs to be fixed
+			// secretDetection: {
+			// 	docker.#Run & {
+			// 		workdir: "./src"
+			// 		input:   deps.gitleaks.output
+			// 		command: {
+			// 			name: "detect"
+			// 		}
+			// 	}
+			// }
 			dependencyScanning: {
 				docker.#Run & {
 					workdir: "./src"

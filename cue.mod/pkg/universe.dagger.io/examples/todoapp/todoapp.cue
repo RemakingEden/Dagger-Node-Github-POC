@@ -70,106 +70,14 @@ dagger.#Plan & {
 				},
 			]
 		}
-		gitleaks: docker.#Build & {
-			steps: [
-				docker.#Pull & {
-					source: "index.docker.io/zricethezav/gitleaks"
-				},
-				docker.#Copy & {
-					contents: client.filesystem."./".read.contents
-					dest:     "/src"
-				},
-			]
-		}
 
-		test: run: {
-			input:   gitleaks.output
+		test: bash.#Run & {
+			input:   deps.output
 			workdir: "/src"
 			mounts:  _nodeModulesMount
-
-			// Test: run a simple shell command
-			simpleShell: {
-				run: docker.#Run & {
-					input: gitleaks.output
-					command: {
-						name: "detect"
-						// args: ["-c", "echo -n hello world >> /output.txt"]
-					}
-				}
-			}
-
-			//  verify: core.#ReadFile & {
-			//   input: gitleaksImage.rootfs
-			//   path:  "/output.txt"
-			//  }
-			//  verify: contents: "hello world"
-			// }
-
-			// // Test: export a file
-			// exportFile: {
-			//  run: docker.#Run & {
-			//   input: deps.output
-			//   command: {
-			//    name: "sh"
-			//    flags: "-c": #"""
-			//    ls /src >> /output.txt
-			//    """#
-			//   }
-			//   export: files: "/output.txt": string & "hello world"
-			//  }
-			// }
-
-			// // Test: export a directory
-			// exportDirectory: {
-			//  run: docker.#Run & {
-			//   input: deps.output
-			//   export: directories: "/src": _
-			//  }
-
-			//  verify: core.#ReadFile & {
-			//   input: run.export.directories."/src"
-			//   path:  "/yarn.lock"
-			//  }
-			//  verify: contents: "hello world"
-			// }
-
-			// // Test: configs overriding image defaults
-			// configs: {
-			//  _base: docker.#Set & {
-			//   input: deps.output
-			//   config: {
-			//    user:    "nobody"
-			//    workdir: "/sbin"
-			//    entrypoint: ["sh"]
-			//    cmd: ["-c", "echo -n $0 $PWD $(whoami) > /tmp/output.txt"]
-			//   }
-			//  }
-
-			//  // check defaults not overriden by image config
-			//  runDefaults: docker.#Run & {
-			//   input: deps.output
-			//   command: {
-			//    name: "sh"
-			//    flags: "-c": "echo -n $PWD $(whoami) > /output.txt"
-			//   }
-			//   export: files: "/output.txt": "/ root"
-			//  }
-
-			//  // check image defaults
-			//  imageDefaults: docker.#Run & {
-			//   input: _base.output
-			//   export: files: "/tmp/output.txt": "sh /sbin nobody"
-			//  }
-
-			//  // check overrides by user
-			//  overrides: docker.#Run & {
-			//   input: _base.output
-			//   entrypoint: ["bash"]
-			//   workdir: "/root"
-			//   user:    "root"
-			//   export: files: "/tmp/output.txt": "bash /root root"
-			//  }
-			// }
+			script: contents: #"""
+				yarn run test
+				"""#
 		}
 
 		build: {
