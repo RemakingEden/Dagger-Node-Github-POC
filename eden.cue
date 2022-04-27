@@ -118,25 +118,16 @@ dagger.#Plan & {
 		}
 
 		SCA: {
-			secretDetection: {
-				steps: [
-					docker.#Run & {
-						workdir: "./src"
-						input:   deps.gitleaks.output
-						command: {
-							name: "/bin/bash"
-							args: ["git config --global --add safe.directory ./src"]
-						}
-					},
-					docker.#Run & {
-						workdir: "./src"
-						input:   deps.gitleaks.output
-						command: {
-							name: "detect"
-						}
-					},
-				]
-			}
+			// Currently failing due to https://github.blog/2022-04-12-git-security-vulnerability-announced/ , the gitleaks container needs to be fixed
+			// secretDetection: {
+			// 	docker.#Run & {
+			// 		workdir: "./src"
+			// 		input:   deps.gitleaks.output
+			// 		command: {
+			// 			name: "detect"
+			// 		}
+			// 	}
+			// }
 			dependencyScanning: {
 				docker.#Run & {
 					workdir: "./src"
