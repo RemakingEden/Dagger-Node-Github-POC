@@ -18,8 +18,8 @@ dagger.#Plan & {
 			}
 		}
 		env: {
-			SONAR_LOGIN: dagger.#Secret
-			GITHUB_REF:  GITHUB_REF
+			SONAR_LOGIN:     dagger.#Secret
+			GITHUB_HEAD_REF: GITHUB_HEAD_REF
 		}
 	}
 	actions: {
@@ -84,7 +84,7 @@ dagger.#Plan & {
 			sonarscanner:
 				docker.#Run & {
 					env: {
-						GITHUB_BRANCH_NAME: client.env.GITHUB_REF
+						GITHUB_BRANCH_NAME: client.env.GITHUB_HEAD_REF
 						SONAR_LOGIN:        client.env.SONAR_LOGIN
 						SONAR_HOST_URL:     "https://sonarcloud.io"
 					}
@@ -104,29 +104,28 @@ dagger.#Plan & {
 					}
 				}
 			}
-			// unitTest: {
-			//  workdir: "./src"
-			//  docker.#Run & {
-			//   input: build.output
-			//   command: {
-			//    name: "/bin/bash"
-			//    args: ["-c", "npm run test:unit"]
-			//   }
-			//  }
-			//  output: code coverage file
-			// }
+			unitTest: {
+				workdir: "./src"
+				docker.#Run & {
+					input: build.output
+					command: {
+						name: "/bin/bash"
+						args: ["-c", "npm run test:unit"]
+					}
+				}
+			}
 		}
 
 		SCA: {
 			// Currently failing due to https://github.blog/2022-04-12-git-security-vulnerability-announced/ , the gitleaks container needs to be fixed
 			// secretDetection: {
-			// 	docker.#Run & {
-			// 		workdir: "./src"
-			// 		input:   deps.gitleaks.output
-			// 		command: {
-			// 			name: "detect"
-			// 		}
-			// 	}
+			//  docker.#Run & {
+			//   workdir: "./src"
+			//   input:   deps.gitleaks.output
+			//   command: {
+			//    name: "detect"
+			//   }
+			//  }
 			// }
 			dependencyScanning: {
 				docker.#Run & {
