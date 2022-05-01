@@ -19,7 +19,7 @@ dagger.#Plan & {
 		}
 		env: {
 			SONAR_LOGIN: dagger.#Secret
-			GITHUB_REF:  GITHUB_HEAD_REF
+			GITHUB_HEAD_REF:  GITHUB_HEAD_REF
 		}
 	}
 	actions: {
