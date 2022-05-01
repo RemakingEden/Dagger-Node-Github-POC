@@ -23,7 +23,8 @@
     "db:create:ci": "cross-env NODE_ENV=ci npx sequelize-cli db:create",
     "migrate:ci": "cross-env NODE_ENV=ci npx sequelize-cli db:migrate",
     "seed:ci": "cross-env NODE_ENV=ci npx sequelize-cli db:seed:all",
-    "test:ci": "npm run db:create:ci && npm run migrate:ci && npm run seed:ci && cross-env NODE_ENV=ci jest --testTimeout=10000"
+    "test:ci": "npm run db:create:ci && npm run migrate:ci && npm run seed:ci && cross-env NODE_ENV=ci jest --testTimeout=10000",
+    "test:unit": "echo 'Need to be added'"
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",
