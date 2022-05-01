@@ -84,7 +84,7 @@ dagger.#Plan & {
 			sonarscanner:
 				docker.#Run & {
 					env: {
-						GITHUB_BRANCH_NAME: client.env.GITHUB_REF
+						GITHUB_BRANCH_NAME: client.env.GITHUB_HEAD_REF
 						SONAR_LOGIN:        client.env.SONAR_LOGIN
 						SONAR_HOST_URL:     "https://sonarcloud.io"
 					}
