@@ -41,7 +41,7 @@
     "sequelize": "^6.19.0",
     "sequelize-cli": "^6.4.1",
     "supertest": "^6.3.0",
-    "ts-node": "^10.7.0"
+    "ts-node": "^10.9.1"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^5.40.0",
