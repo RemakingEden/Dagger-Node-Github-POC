@@ -34,20 +34,20 @@
     "express": "~4.18.2",
     "http-errors": "~2.0.0",
     "jest": "^28.1.2",
-    "jest-snapshot": "^29.1.2",
+    "jest-snapshot": "^29.2.2",
     "morgan": "~1.10.0",
     "pg": "^8.8.0",
     "pg-hstore": "^2.3.4",
     "sequelize": "^6.25.0",
-    "sequelize-cli": "^6.5.1",
+    "sequelize-cli": "^6.5.2",
     "supertest": "^6.3.0",
     "ts-node": "^10.9.1"
   },
   "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "^5.40.0",
+    "@typescript-eslint/eslint-plugin": "^5.42.0",
     "@typescript-eslint/parser": "^5.40.0",
     "audit-ci": "^6.2.0",
-    "eslint": "^8.25.0",
+    "eslint": "^8.26.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-plugin-import": "^2.26.0"
   }
